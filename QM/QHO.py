@@ -4,6 +4,11 @@ import numpy as np
 from manim import *
 from scipy.special import hermite
 
+config.frame_height = 16
+config.frame_width = 9
+config.pixel_height = 1920
+config.pixel_width = 1080
+
 # To run this animation, save it as a Python file (e.g., quantum_harmonic_oscillator.py)
 # and run the following command in your terminal:
 # manim -pql quantum_harmonic_oscillator.py
@@ -24,14 +29,15 @@ class QuantumHarmonicOscillatorStationaryStates(Scene):
         title = Title(
             "Quantum Harmonic Oscillator: Stationary States",
             color=BLACK,
+            font_size=36,
             include_underline=False,
         ).to_edge(UP)
 
         axes = Axes(
-            x_range=[-5, 5, 1],
-            y_range=[0, 5, 1],
-            x_length=10,
-            y_length=6,
+            x_range=[-7, 7, 1],
+            y_range=[0, 8, 1],
+            x_length=15,
+            y_length=9,
             axis_config={"color": BLACK, "include_tip": False},
         ).add_coordinates()
 
@@ -47,13 +53,13 @@ class QuantumHarmonicOscillatorStationaryStates(Scene):
             """The potential energy V(x) = 1/2 * k * x^2."""
             return 0.5 * k * x**2
 
-        potential_graph = axes.plot(potential_func, color=BLUE, x_range=[-3.5, 3.5])
+        potential_graph = axes.plot(potential_func, color=BLUE, x_range=[-5, 5])
         potential_label = axes.get_graph_label(
-            potential_graph, label="V(x) = \\frac{1}{2}kx^2", x_val=-3
+            potential_graph, label="V(x) = \\frac{1}{2}kx^2", x_val=-6.5
         ).set_color(BLUE)
 
         # Group axes and potential for initial animation
-        setup_group = VGroup(axes, x_label, y_label, potential_graph, potential_label)
+        setup_group = VGroup(axes, x_label, y_label, potential_graph, potential_label).scale(0.65)
 
         self.play(Write(title))
         self.play(Create(setup_group), run_time=2)
@@ -82,7 +88,7 @@ class QuantumHarmonicOscillatorStationaryStates(Scene):
             return func
 
         # 4. Animate the states sequentially
-        max_n = 3
+        max_n = 4
         for n in range(max_n + 1):
             # Energy level line
             E_n = energy_level(n)
@@ -117,7 +123,11 @@ class QuantumHarmonicOscillatorStationaryStates(Scene):
             )
             self.wait(1)
 
+        wave_function = Tex("$\\Psi_n(x) = H_n(x)e^{(-x^2)}$", color=BLACK).shift(3.5*DOWN)
+        f1 = Tex("where $H_n(x)$ are Hermite polynomials", color=BLACK).next_to(wave_function, DOWN)
+        self.play(Write(wave_function), Write(f1))
         self.wait(3)
+
 
 
 class QuantumHarmonicOscillatorTimeEvolution(Scene):
