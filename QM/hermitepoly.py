@@ -1,6 +1,13 @@
 from manim import *
 import math 
 
+
+## Changes for portrait mode
+config.frame_height = 16
+config.frame_width = 9
+config.pixel_height = 1920
+config.pixel_width = 1080
+
 class HermitePolynomials(Scene):
     def construct(self):
         

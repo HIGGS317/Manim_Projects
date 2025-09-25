@@ -25,10 +25,11 @@ class QuantumHarmonicOscillatorStationaryStates(Scene):
 
     def construct(self):
         # 1. Setup the Scene and Axes
-        self.camera.background_color = "#f9f9f9"  # A light background
+        # self.camera.background_color = "#f9f9f9"  # A light background
+        self.camera.background_color = "#000000" # A Dark background
         title = Title(
             "Quantum Harmonic Oscillator: Stationary States",
-            color=BLACK,
+            color=WHITE,
             font_size=36,
             include_underline=False,
         ).to_edge(UP)
@@ -38,12 +39,12 @@ class QuantumHarmonicOscillatorStationaryStates(Scene):
             y_range=[0, 8, 1],
             x_length=15,
             y_length=9,
-            axis_config={"color": BLACK, "include_tip": False},
+            axis_config={"color": WHITE, "include_tip": False},
         ).add_coordinates()
 
         # Add labels to the axes
-        x_label = axes.get_x_axis_label("x", edge=DOWN, direction=DOWN).set_color(BLACK)
-        y_label = axes.get_y_axis_label("E", edge=LEFT, direction=LEFT).set_color(BLACK)
+        x_label = axes.get_x_axis_label("x", edge=DOWN, direction=DOWN).set_color(WHITE)
+        y_label = axes.get_y_axis_label("E", edge=LEFT, direction=LEFT).set_color(WHITE)
 
         # 2. Define the Potential and Energy Levels
         # We use simplified units where m = omega = h_bar = 1
@@ -107,7 +108,7 @@ class QuantumHarmonicOscillatorStationaryStates(Scene):
             # Labels for the state
             n_label_text = f"n = {n}"
 
-            n_label = MathTex(n_label_text, color=BLACK).next_to(
+            n_label = MathTex(n_label_text, color=WHITE).next_to(
                 axes.c2p(4, E_n), RIGHT
             )
 
@@ -123,12 +124,17 @@ class QuantumHarmonicOscillatorStationaryStates(Scene):
             )
             self.wait(1)
 
-        wave_function = Tex("$\\Psi_n(x) = H_n(x)e^{(-x^2)}$", color=BLACK).shift(3.5*DOWN)
-        f1 = Tex("where $H_n(x)$ are Hermite polynomials", color=BLACK).next_to(wave_function, DOWN)
-        self.play(Write(wave_function), Write(f1))
+        wave_function = Tex("$\\Psi_n(x) = H_n(x)e^{(-x^2)}$", color=WHITE).shift(3.5*DOWN)
+
+        hermite1 = Tex("$H_n(x) = (-1)^n e^{x^2} \\frac{d^n}{dx^n} e^{-x^2}$", color=WHITE).next_to(wave_function, DOWN)
+
+        f1 = Tex("where $H_n(x)$ are Hermite polynomials", color=WHITE).next_to(wave_function, DOWN)
+
+        self.play(Write(wave_function), Write(hermite1))
         self.wait(3)
 
-
+            # self.play(ReplacementTransform(hermite1, f1))
+            # self.wait(3)
 
 class QuantumHarmonicOscillatorTimeEvolution(Scene):
     """
